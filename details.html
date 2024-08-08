@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detector Mania - Website Application</title>
+    <link rel="shortcut icon" href="./assets/favicon.ico" type="image/x-icon">
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <!-- Google Fonts: Raleway -->
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;800&display=swap" rel="stylesheet">
+    <!-- <link href="css/styles.css" rel="stylesheet"> -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Raleway', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fff;
+            scroll-behavior: smooth;
+        }
+         /* Your existing styles */
+         .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+        .mobile-menu.active {
+            transform: translateX(0);
+        }
+        /* Custom styles for the carousel */
+        .slick-slide {
+            transition: transform 0.5s ease;
+        }
+
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+
+        #navigation {
+            width: 100%;
+            background-color: #fff;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .dark-mode #navigation {
+            background-color: #1f1f1f;
+            color: #e0e0e0;
+        }
+
+        .bg-green-700 {
+            background-color: #006400;
+        }
+
+        .nav-items {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-items a {
+            color: inherit;
+            text-decoration: none;
+            padding: 0.5rem;
+        }
+
+        .nav-items a:hover {
+            text-decoration: underline;
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .nav-icons i {
+            cursor: pointer;
+        }
+
+        .custom-searchbutton {
+            position: absolute;
+            font-size: 20px;
+            width: 40px;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        .custom-search {
+            position: absolute;
+            right: 0;
+            background-color: white;
+            outline: none;
+            border: none;
+            padding: 0;
+            width: 0;
+            height: 100%;
+            transition: width 0.4s ease;
+            text-indent: 10px;
+        }
+
+        .custom-search:focus {
+            width: 240px; /* Adjust width as needed */
+            padding: 0 10px;
+        }
+
+        .dark-mode .custom-search {
+            background-color: #333;
+            color: #e0e0e0;
+        }
+
+        #notifications {
+            display: none;
+        }
+
+        #notifications.show {
+            display: block;
+        }
+
+        #mobileNavLinks {
+            display: none;
+        }
+
+        #mobileNavLinks.show {
+            display: flex;
+        }
+
+        .fixed-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .mobile-nav-content {
+            position: fixed;
+            top: 0;
+            right: 0;
+            height: 100%;
+            background: #fff;
+            padding: 2rem;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-nav-content.active {
+            transform: translateX(0);
+        }
+
+        .mobile-nav-content ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .mobile-nav-content li {
+            margin-bottom: 1rem;
+        }
+
+        .mobile-nav-content a {
+            text-decoration: none;
+            color: #333;
+            display: block;
+            padding: 0.5rem 0;
+        }
+
+        .mobile-nav-content a:hover {
+            text-decoration: underline;
+        }
+
+          /* Hide scrollbar for WebKit browsers */
+        .scrollbar-hide::-webkit-scrollbar {
+          display: none;
+        }
+
+        /* Hide scrollbar for Firefox */
+        .scrollbar-hide {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+    </style>
+</head>
+<body>
+  <div id="navigation" class="relative w-full transition-colors duration-300">
+    <div style="background-color: #5b8266" class="py-2"></div>
+      <div
+        class="max-w-7xl mx-auto px-6 py-10 flex items-center justify-between relative"
+      >
+        <a href="index.html">
+          <img
+            src="./assets/logo.png"
+            alt="Detector Mania"
+            class="w-32 sm:w-44 md:w-56"
+          />
+        </a>
+
+        <ul
+          class="hidden xl:flex items-center gap-3 uppercase font-semibold text-xs"
+        >
+          <li>
+            <a href="index.html" class="hover:text-green-600 transition-all"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a href="magnet.html" class="hover:text-green-600 transition-all"
+              >Magnet Fishing</a
+            >
+          </li>
+          <li>
+            <a href="news.html" class="hover:text-green-600 transition-all"
+              >News</a
+            >
+          </li>
+          <li>
+            <a href="trekking.html" class="hover:text-green-600 transition-all"
+              >Trekking</a
+            >
+          </li>
+          <li class="flex items-center gap-1">
+            <p><a href="#recension">Recension</a></p>
+            <p
+              class="text-xs p-1 rounded-md bg-yellow-100 text-black flex items-center gap-1"
+            >
+              New <img class="w-3" src="./assets/flammable.svg" alt="" />
+            </p>
+          </li>
+          <li>
+            <a href="schede.html" class="hover:text-green-600 transition-all"
+              >Schede Tecniche</a
+            >
+          </li>
+          <li>
+            <a href="arte.html" class="hover:text-green-600 transition-all"
+              >Arte e storia</a
+            >
+          </li>
+          <li>
+            <a
+              href="legislatura.html"
+              class="hover:text-green-600 transition-all"
+              >Legislatura</a
+            >
+          </li>
+        </ul>
+
+        <div class="flex items-center gap-3 sm:gap-5 text-xl relative">
+          <i
+            style="color: #5b8266"
+            class="fas fa-circle-half-stroke text-xl cursor-pointer"
+            id="toggle-dark-mode"
+          ></i>
+          <div class="relative">
+            <i
+              style="color: #5b8266"
+              class="fas fa-bell cursor-pointer relative"
+              id="toggle-notifications"
+            ></i>
+            <div
+              class="absolute top-0 right-0 w-3 h-3 bg-red-500 rounded-full border border-red-500"
+            ></div>
+            <div
+              id="notifications"
+              class="hidden absolute z-20 top-full -right-12 mt-2 w-64 border rounded-md shadow-lg bg-white text-gray-900 border-gray-300"
+            >
+              <div class="p-4">
+                <h4 class="text-lg font-semibold">Notifications</h4>
+                <ul class="mt-2 text-sm">
+                  <li class="py-2 border-b">New comment on your post</li>
+                  <li class="py-2 border-b">New follower</li>
+                  <li class="py-2 border-b">Update available</li>
+                  <li class="py-2">Maintenance scheduled</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="relative flex items-center">
+            <div class="custom-search-container">
+              <i
+                style="background-color: #5b8266"
+                class="fas fa-magnifying-glass text-white text-sm p-2 rounded-md cursor-pointer"
+                id="toggle-search"
+              ></i>
+              <input
+                id="searchInput"
+                type="text"
+                placeholder="Search..."
+                class="custom-search hidden p-2 border rounded-l-lg outline-none transition-transform duration-300 ease-in-out"
+              />
+            </div>
+          </div>
+          <i
+            style="background-color: #5b8266"
+            class="fas fa-bars text-white p-2 text-sm rounded-md cursor-pointer"
+            id="show-mobile-nav"
+          ></i>
+        </div>
+      </div>
+
+      <!-- Scrollable NavLink For Mobile Screens -->
+      <div
+          class="md:hidden overflow-x-auto whitespace-nowrap bg-green-200 text-black py-2 mb-6 scrollbar-hide"
+      >
+          <div class="inline-flex space-x-4 list-none font-semibold">
+          <li class="ml-6">
+              <a href="index.html" class="hover:text-green-600 transition-all"
+              >Home</a
+              >
+          </li>
+          <li>
+              <a href="magnet.html" class="hover:text-green-600 transition-all"
+              >Magnet Fishing</a
+              >
+          </li>
+          <li>
+              <a href="news.html" class="hover:text-green-600 transition-all"
+              >News</a
+              >
+          </li>
+          <li>
+              <a href="trekking.html" class="hover:text-green-600 transition-all"
+              >Trekking</a
+              >
+          </li>
+          <li>
+              <a href="recension.html" class="hover:text-green-600 transition-all"
+              >Recension</a
+              >
+          </li>
+          <li>
+              <a href="schede.html" class="hover:text-green-600 transition-all"
+              >Schede Tecniche</a
+              >
+          </li>
+          <li>
+              <a href="arte.html" class="hover:text-green-600 transition-all"
+              >Arte e storia</a
+              >
+          </li>
+          <li class="pr-6">
+              <a href="legislatura.html" class="hover:text-green-600 transition-all"
+              >Legislatura</a
+              >
+          </li>
+          </div>
+      </div>
+
+      <!--Effect Similar to that of smartworld.it Mobile Navigation in both Desktop and Mobile  -->
+      <div
+        class="mobile-nav-content transition-transform duration-300 transform translate-x-full w-full md:w-1/2 lg:w-1/3 bg-white shadow-lg h-full fixed right-0 top-0 z-50"
+      >
+        <i
+          class="fas fa-times p-4 text-black cursor-pointer text-3xl absolute right-2 top-2"
+          id="close-mobile-nav"
+        ></i>
+        <ul class="uppercase font-semibold text-base">
+          <li>
+            <a href="index.html" class="hover:text-green-600 mt-12 transition-all"
+              >Home</a
+            >
+          </li>
+          <li>
+            <a href="magnet.html" class="hover:text-green-600 transition-all"
+              >Magnet Fishing</a
+            >
+          </li>
+          <li>
+            <a href="news.html" class="hover:text-green-600 transition-all"
+              >News</a
+            >
+          </li>
+          <li>
+            <a href="trekking.html" class="hover:text-green-600 transition-all"
+              >Trekking</a
+            >
+          </li>
+          <li class="flex items-center gap-1">
+            <p><a href="#recension">Recension</a></p>
+            <p
+              class="text-xs p-1 rounded-md bg-yellow-100 text-black flex items-center gap-1"
+            >
+              New <img class="w-3" src="./assets/flammable.svg" alt="" />
+            </p>
+          </li>
+          <li>
+            <a href="schede.html" class="hover:text-green-600 transition-all"
+              >Schede Tecniche</a
+            >
+          </li>
+          <li>
+            <a href="arte.html" class="hover:text-green-600 transition-all"
+              >Arte e storia</a
+            >
+          </li>
+          <li>
+            <a
+              href="legislatura.html"
+              class="hover:text-green-600 transition-all"
+              >Legislatura</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div
+      class="p-4 transition-colors duration-300"
+      id="product-details-screen"
+    >
+      <div class="max-w-7xl mx-auto px-3">
+        <!-- Product Header -->
+        <div id="product-header">
+          <!-- Product Header -->
+          <div class="flex items-center justify-between mt-12 mb-8">
+            <!-- Header Content -->
+            <div>
+              <h1 class="text-3xl md:text-5xl font-bold mb-3">Nokta FIndX</h1>
+              <p class="text-lg lg:text-2xl font-semibold text-gray-400">Scheda Tecnica</p>
+            </div>
+
+            <!-- Search Input -->
+            <div class="hidden sm:flex items-center bg-gray-100 rounded-xl px-4 py-2 shadow-md w-full max-w-md">
+              <input type="text" placeholder="Cerca un modello di device..." class="bg-transparent text-sm outline-none w-full text-black">
+              <i class="fa fa-search h-5 w-5 text-gray-500 cursor-pointer"></i>
+          </div>
+          </div>
+        </div>
+
+        <!-- Detail Description -->
+        <div id="detail-descr">
+          <!-- Detail Description -->
+          <div>
+            <!-- Main Content and Sidebar Layout -->
+            <div class="flex flex-col gap-6 md:flex-row">
+              <!-- Main Content -->
+              <div class="w-full md:w-1/2 lg:w-2/3 ">
+                <div>
+                  <div class="flex flex-col gap-6">
+                    <!-- Product Price Card -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                      <div
+                        style="border-color: #AEF6C7; height: fit-content;"
+                        class="flex md:flex-col py-8 px-4 md:pb-10 rounded-3xl shadow-lg border-4 transition-all"
+                      >
+                        <img
+                          src="./assets/metal_3.png"
+                          alt="item"
+                          class="w-20 md:w-32 mx-auto object-cover"
+                        />
+                        <div class="flex flex-col items-start gap-2">
+                          <h3 class="font-bold text-xl md:text-2xl">
+                            Miglior prezzo
+                          </h3>
+                          <p class="text-2xl font-bold text-red-600">
+                            179,90
+                            <i class="fa-solid fa-euro-sign"></i>
+                          </p>
+                          <div class="w-full">
+                            <div
+                              class="flex cursor-pointer items-center justify-between bg-yellow-400 hover:bg-yellow-500 transition-all py-2 px-4 rounded-xl"
+                            >
+                              <h3 class="font-semibold">Scopri l'offerta</h3>
+                              <i class="fa-solid fa-chevron-right"></i>
+                            </div>
+                          </div>
+                          <p class="text-sm text-gray-500 mt-2">da Amazon</p>
+                        </div>
+                      </div>
+
+                      <!-- Product Specifications -->
+                      <div class="lg:col-span-2">
+                        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-2 md:gap-3 mb-12">
+                          <!-- Example Specification Card -->
+                          <div
+                            class="flex items-center gap-2 md:gap-3 text-gray-900 bg-gray-300 px-3 py-1 rounded-md"
+                          >
+                          <i class="fa-regular fa-eye text-3xl"></i>
+                            <div>
+                              <h3
+                                class="text-sm uppercase font-bold"
+                              >
+                                LCD
+                              </h3>
+                              <p class="uppercase text-xs">Disponsible</p>
+                            </div>
+                          </div>
+                          <div
+                            class="flex items-center gap-2 md:gap-3 text-gray-900 bg-gray-300 px-3 py-1 rounded-md"
+                          >
+                          <i class="fa-regular fa-eye text-3xl"></i>
+                            <div>
+                              <h3
+                                class="text-sm uppercase font-bold"
+                              >
+                                Piastra
+                              </h3>
+                              <p class="uppercase text-xs">3x5" * 5x7</p>
+                            </div>
+                          </div>
+                          <div
+                            class="flex items-center gap-2 md:gap-3 text-gray-900 bg-gray-300 px-3 py-1 rounded-md"
+                          >
+                          <i class="fa-regular fa-eye text-3xl"></i>
+                            <div>
+                              <h3
+                                class="text-sm uppercase font-bold"
+                              >
+                                LCD
+                              </h3>
+                              <p class="uppercase text-xs">Disponsible</p>
+                            </div>
+                          </div>
+                          <div
+                            class="flex items-center gap-2 md:gap-3 text-gray-900 bg-gray-300 px-3 py-1 rounded-md"
+                          >
+                          <i class="fa-regular fa-eye text-3xl"></i>
+                            <div>
+                              <h3
+                                class="text-sm uppercase font-bold"
+                              >
+                                Piastra
+                              </h3>
+                              <p class="uppercase text-xs">Disponsible</p>
+                            </div>
+                          </div>
+                          <div
+                            class="flex items-center gap-2 md:gap-3 text-gray-900 bg-gray-300 px-3 py-1 rounded-md"
+                          >
+                          <i class="fa-regular fa-eye text-3xl"></i>
+                            <div>
+                              <h3
+                                class="text-sm uppercase font-bold"
+                              >
+                                LCD
+                              </h3>
+                              <p class="uppercase text-xs">Disponsible</p>
+                            </div>
+                          </div>
+                          <div
+                            class="flex items-center gap-2 md:gap-3 text-gray-900 bg-gray-300 px-3 py-1 rounded-md"
+                          >
+                          <i class="fa-regular fa-eye text-3xl"></i>
+                            <div>
+                              <h3
+                                class="text-sm uppercase font-bold"
+                              >
+                                LCD
+                              </h3>
+                              <p class="uppercase text-xs">Disponsible</p>
+                            </div>
+                          </div>
+
+                          <!-- Repeat similar specification cards as needed -->
+                        </div>
+
+                        <!-- Description Paragraphs -->
+                        <div class="space-y-3">
+                          <p class="text-base md:text-lg lg:text-xl">
+                            Si avvicina l’estate e stai pensando di acquistare un
+                            metal detector per le tue vacanze? La spiaggia è uno
+                            dei luoghi più affascinanti per praticare il metal
+                            detecting. Tuttavia, la scelta del metal detector giusto
+                            può fare la differenza tra un’avventura emozionante e
+                            una frustrante battaglia contro le interferenze dei
+                            minerali presenti nella sabbia e nell’acqua salata. In
+                            questo articolo ti indicheremo quale potrebbe essere il
+                            miglior metal detector da spiaggia per te.
+                          </p>
+                          <p class="text-base md:text-lg lg:text-xl">
+                            Si avvicina l’estate e stai pensando di acquistare un
+                            metal detector per le tue vacanze? La spiaggia è uno
+                            dei luoghi più affascinanti per praticare il metal
+                            detecting. Tuttavia, la scelta del metal detector giusto
+                            può fare la differenza tra un’avventura emozionante e
+                            una frustrante battaglia contro le interferenze dei
+                            minerali presenti nella sabbia e nell’acqua salata. In
+                            questo articolo ti indicheremo quale potrebbe essere il
+                            miglior metal detector da spiaggia per te.
+                          </p>
+                          <p class="text-base md:text-lg lg:text-xl">
+                            Si avvicina l’estate e stai pensando di acquistare un
+                            metal detector per le tue vacanze? La spiaggia è uno
+                            dei luoghi più affascinanti per praticare il metal
+                            detecting. Tuttavia, la scelta del metal detector giusto
+                            può fare la differenza tra un’avventura emozionante e
+                            una frustrante battaglia contro le interferenze dei
+                            minerali presenti nella sabbia e nell’acqua salata. In
+                            questo articolo ti indicheremo quale potrebbe essere il
+                            miglior metal detector da spiaggia per te.
+                          </p>
+                          <p class="text-base md:text-lg lg:text-xl">
+                            Si avvicina l’estate e stai pensando di acquistare un
+                            metal detector per le tue vacanze? La spiaggia è uno
+                            dei luoghi più affascinanti per praticare il metal
+                            detecting. Tuttavia, la scelta del metal detector giusto
+                            può fare la differenza tra un’avventura emozionante e
+                            una frustrante battaglia contro le interferenze dei
+                            minerali presenti nella sabbia e nell’acqua salata. In
+                            questo articolo ti indicheremo quale potrebbe essere il
+                            miglior metal detector da spiaggia per te.
+                          </p>
+                        </div>
+
+                        
+                        <!-- Rating Bars -->
+                        <div class="flex flex-col sm:flex-row gap-6 my-16">
+                          <!-- Green bars -->
+                          <div class="flex-1">
+                            <div class="flex flex-col mb-2 w-full gap-5 font-semibold">
+                              <div class="flex items-center justify-between">
+                                <span>Facilità di utilizzo</span>
+                                <span class="ml-2">8</span>
+                              </div>
+                              <div class="flex items-center">
+                                <div class="relative w-full h-2 rounded-full bg-gray-300">
+                                  <div class="absolute h-full rounded-full" style="width: 80%; background-color: #8aff90;"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="flex flex-col mb-2 w-full gap-5 font-semibold">
+                              <div class="flex items-center justify-between">
+                                <span>Facilità di utilizzo</span>
+                                <span class="ml-2">8</span>
+                              </div>
+                              <div class="flex items-center">
+                                <div class="relative w-full h-2 rounded-full bg-gray-300">
+                                  <div class="absolute h-full rounded-full" style="width: 80%; background-color: #8aff90;"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="flex flex-col mb-2 w-full gap-5 font-semibold">
+                              <div class="flex items-center justify-between">
+                                <span>Facilità di utilizzo</span>
+                                <span class="ml-2">8</span>
+                              </div>
+                              <div class="flex items-center">
+                                <div class="relative w-full h-2 rounded-full bg-gray-300">
+                                  <div class="absolute h-full rounded-full" style="width: 80%; background-color: #8aff90;"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      
+                          <!-- Red bars -->
+                          <div class="flex-1">
+                            <div class="flex flex-col mb-2 w-full gap-5 font-semibold">
+                              <div class="flex items-center justify-between">
+                                <span>Comodità</span>
+                                <span class="ml-2">8</span>
+                              </div>
+                              <div class="flex items-center">
+                                <div class="relative w-full h-2 rounded-full bg-gray-300">
+                                  <div class="absolute h-full rounded-full" style="width: 80%; background-color: #f44336;"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="flex flex-col mb-2 w-full gap-5 font-semibold">
+                              <div class="flex items-center justify-between">
+                                <span>Comodità</span>
+                                <span class="ml-2">8</span>
+                              </div>
+                              <div class="flex items-center">
+                                <div class="relative w-full h-2 rounded-full bg-gray-300">
+                                  <div class="absolute h-full rounded-full" style="width: 80%; background-color: #f44336;"></div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="flex flex-col mb-2 w-full gap-5 font-semibold">
+                              <div class="flex items-center justify-between">
+                                <span>Comodità</span>
+                                <span class="ml-2">8</span>
+                              </div>
+                              <div class="flex items-center">
+                                <div class="relative w-full h-2 rounded-full bg-gray-300">
+                                  <div class="absolute h-full rounded-full" style="width: 80%; background-color: #f44336;"></div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <!-- Specifiche component -->
+                        <div>
+                          <section>
+                            <!-- Section Header -->
+                            <h2 class="text-2xl md:text-4xl lg:text-5xl mb-7 font-bold">
+                              Specifiche techniche
+                            </h2>
+                            <h2
+                              class="uppercase text-2xl mb-12 md:text-xl lg:text-3xl font-semibold"
+                            >
+                              Nokta Makro Findx
+                            </h2>
+
+                            <!-- Specification Categories -->
+                            <div class="grid grid-cols-2 gap-5 mb-12">
+                              <!-- LCD Section (Example) -->
+                              <div
+                                class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                              >
+                                <i class="fa-regular fa-eye text-xl"></i>
+                                <!-- FontAwesome Eye Icon -->
+                                <div>
+                                  <h3 class="text-lg uppercase font-semibold">
+                                    LCD
+                                  </h3>
+                                  <p class="uppercase text-xs">Disponsible</p>
+                                </div>
+                              </div>
+                              <div
+                                class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                              >
+                                <i class="fa-regular fa-eye text-xl"></i>
+                                <!-- FontAwesome Eye Icon -->
+                                <div>
+                                  <h3 class="text-lg uppercase font-semibold">
+                                    LCD
+                                  </h3>
+                                  <p class="uppercase text-xs">Disponsible</p>
+                                </div>
+                              </div>
+                              <div
+                                class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                              >
+                                <i class="fa-regular fa-eye text-xl"></i>
+                                <!-- FontAwesome Eye Icon -->
+                                <div>
+                                  <h3 class="text-lg uppercase font-semibold">
+                                    LCD
+                                  </h3>
+                                  <p class="uppercase text-xs">Disponsible</p>
+                                </div>
+                              </div>
+                              <div
+                                class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                              >
+                                <i class="fa-regular fa-eye text-xl"></i>
+                                <!-- FontAwesome Eye Icon -->
+                                <div>
+                                  <h3 class="text-lg uppercase font-semibold">
+                                    LCD
+                                  </h3>
+                                  <p class="uppercase text-xs">Disponsible</p>
+                                </div>
+                              </div>
+                              <!-- Repeat the above div block as needed for more items -->
+                            </div>
+
+                            <!-- Tipo Di Connessioni -->
+                            <div>
+                              <h2
+                                class="uppercase text-2xl lg:text-3xl mb-5 lg:mb-8 md:text-xl font-semibold"
+                              >
+                                Tipo Di Connessioni
+                              </h2>
+                              <div class="grid grid-cols-2 gap-5 mb-12">
+                                <div
+                                  class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                                >
+                                  <i class="fa-regular fa-eye text-xl"></i>
+                                  <!-- FontAwesome Eye Icon -->
+                                  <div>
+                                    <h3 class="text-lg uppercase font-semibold">
+                                      LCD
+                                    </h3>
+                                    <p class="uppercase text-xs">Disponsible</p>
+                                  </div>
+                                </div>
+                                <div
+                                  class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                                >
+                                  <i class="fa-regular fa-eye text-xl"></i>
+                                  <!-- FontAwesome Eye Icon -->
+                                  <div>
+                                    <h3 class="text-lg uppercase font-semibold">
+                                      LCD
+                                    </h3>
+                                    <p class="uppercase text-xs">Disponsible</p>
+                                  </div>
+                                </div>
+                                <div
+                                  class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                                >
+                                  <i class="fa-regular fa-eye text-xl"></i>
+                                  <!-- FontAwesome Eye Icon -->
+                                  <div>
+                                    <h3 class="text-lg uppercase font-semibold">
+                                      LCD
+                                    </h3>
+                                    <p class="uppercase text-xs">Disponsible</p>
+                                  </div>
+                                </div>
+                                <div
+                                  class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                                >
+                                  <i class="fa-regular fa-eye text-xl"></i>
+                                  <!-- FontAwesome Eye Icon -->
+                                  <div>
+                                    <h3 class="text-lg uppercase font-semibold">
+                                      LCD
+                                    </h3>
+                                    <p class="uppercase text-xs">Disponsible</p>
+                                  </div>
+                                </div>
+                                <!-- Repeat the above div block as needed for more items -->
+                              </div>
+                            </div>
+
+                            <!-- Altre Informazioni -->
+                            <div>
+                              <h2
+                               class="uppercase text-2xl lg:text-3xl mb-5 lg:mb-8 md:text-xl font-semibold"
+                              >
+                                Altre Informazioni
+                              </h2>
+                              <div class="grid grid-cols-2 gap-5 mb-12">
+                                <div
+                                  class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                                >
+                                  <i class="fa-regular fa-eye text-xl"></i>
+                                  <!-- FontAwesome Eye Icon -->
+                                  <div>
+                                    <h3 class="text-lg uppercase font-semibold">
+                                      LCD
+                                    </h3>
+                                    <p class="uppercase text-xs">Disponsible</p>
+                                  </div>
+                                </div>
+                                <div
+                                  class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                                >
+                                  <i class="fa-regular fa-eye text-xl"></i>
+                                  <!-- FontAwesome Eye Icon -->
+                                  <div>
+                                    <h3 class="text-lg uppercase font-semibold">
+                                      LCD
+                                    </h3>
+                                    <p class="uppercase text-xs">Disponsible</p>
+                                  </div>
+                                </div>
+                                <div
+                                  class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                                >
+                                  <i class="fa-regular fa-eye text-xl"></i>
+                                  <!-- FontAwesome Eye Icon -->
+                                  <div>
+                                    <h3 class="text-lg uppercase font-semibold">
+                                      LCD
+                                    </h3>
+                                    <p class="uppercase text-xs">Disponsible</p>
+                                  </div>
+                                </div>
+                                <div
+                                  class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                                >
+                                  <i class="fa-regular fa-eye text-xl"></i>
+                                  <!-- FontAwesome Eye Icon -->
+                                  <div>
+                                    <h3 class="text-lg uppercase font-semibold">
+                                      LCD
+                                    </h3>
+                                    <p class="uppercase text-xs">Disponsible</p>
+                                  </div>
+                                </div>
+                                <!-- Repeat the above div block as needed for more items -->
+                              </div>
+                            </div>
+
+                            <!-- Lorem Ipsum -->
+                            <div>
+                              <h2
+                               class="uppercase text-2xl lg:text-3xl mb-5 lg:mb-8 md:text-xl font-semibold"
+                              >
+                                Lorem Ipsum
+                              </h2>
+                              <div class="grid grid-cols-2 gap-5 mb-12">
+                                <div
+                                  class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                                >
+                                  <i class="fa-regular fa-eye text-xl"></i>
+                                  <!-- FontAwesome Eye Icon -->
+                                  <div>
+                                    <h3 class="text-lg uppercase font-semibold">
+                                      LCD
+                                    </h3>
+                                    <p class="uppercase text-xs">Disponsible</p>
+                                  </div>
+                                </div>
+                                <div
+                                  class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                                >
+                                  <i class="fa-regular fa-eye text-xl"></i>
+                                  <!-- FontAwesome Eye Icon -->
+                                  <div>
+                                    <h3 class="text-lg uppercase font-semibold">
+                                      LCD
+                                    </h3>
+                                    <p class="uppercase text-xs">Disponsible</p>
+                                  </div>
+                                </div>
+                                <div
+                                  class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                                >
+                                  <i class="fa-regular fa-eye text-xl"></i>
+                                  <!-- FontAwesome Eye Icon -->
+                                  <div>
+                                    <h3 class="text-lg uppercase font-semibold">
+                                      LCD
+                                    </h3>
+                                    <p class="uppercase text-xs">Disponsible</p>
+                                  </div>
+                                </div>
+                                <div
+                                  class="flex items-center gap-3 text-gray-900 bg-gray-200 px-3 py-1 rounded-md"
+                                >
+                                  <i class="fa-regular fa-eye text-xl"></i>
+                                  <!-- FontAwesome Eye Icon -->
+                                  <div>
+                                    <h3 class="text-lg uppercase font-semibold">
+                                      LCD
+                                    </h3>
+                                    <p class="uppercase text-xs">Disponsible</p>
+                                  </div>
+                                </div>
+                                <!-- Repeat the above div block as needed for more items -->
+                              </div>
+                            </div>
+                          </section>
+                        </div>
+
+                        <!-- Related Articles -->
+
+                        <div class="pt-20 pb-24">
+                          <h2 class="text-2xl md:text-4xl lg:text-5xl mb-7 font-bold">
+                            Articoli su Nokta FindX...
+                          </h2>
+
+                          <div class="flex flex-col gap-8 max-w-7xl mx-auto">
+                            <div class="flex items-center gap-5 cursor-pointer hover:opacity-70">
+                                <img src="./assets/img_article_1.png" alt="" class="rounded-2xl w-24 lg:w-36 h-24 lg:h-36 object-cover">
+                                <div class="space-y-0">
+                                    <p class="text-xs">Emilio G</p>
+                                    <p class="text-lg md:text-2xl font-bold">
+                                        La maschera d'oro di Teres, simbolo odierno della Golden Mask
+                                    </p>
+                                    <p style="color: #5B8266; background-color: #AEF6C7;" class="px-4 w-fit rounded-xl inline-block text-xs md:text-sm font-extralight">
+                                        Curiosita
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-5 cursor-pointer hover:opacity-70">
+                                <img src="./assets/img_article_2.jpg" alt="" class="rounded-2xl w-24 lg:w-36 h-24 lg:h-36 object-cover">
+                                <div class="space-y-0">
+                                    <p class="text-xs">Emilio G</p>
+                                    <p class="text-lg md:text-2xl font-bold">
+                                        La maschera d'oro di Teres, simbolo odierno della Golden Mask
+                                    </p>
+                                    <p style="color: #5B8266; background-color: #AEF6C7;" class="px-4 w-fit rounded-xl inline-block text-xs md:text-sm font-extralight">
+                                        Curiosita
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-5 cursor-pointer hover:opacity-70">
+                                <img src="./assets/img_article_1.png" alt="" class="rounded-2xl w-24 lg:w-36 h-24 lg:h-36 object-cover">
+                                <div class="space-y-0">
+                                    <p class="text-xs">Emilio G</p>
+                                    <p class="text-lg md:text-2xl font-bold">
+                                        La maschera d'oro di Teres, simbolo odierno della Golden Mask
+                                    </p>
+                                    <p style="color: #5B8266; background-color: #AEF6C7;" class="px-4 w-fit rounded-xl inline-block text-xs md:text-sm font-extralight">
+                                        Curiosita
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-5 cursor-pointer hover:opacity-70">
+                                <img src="./assets/img_article_2.jpg" alt="" class="rounded-2xl w-24 lg:w-36 h-24 lg:h-36 object-cover">
+                                <div class="space-y-0">
+                                    <p class="text-xs">Emilio G</p>
+                                    <p class="text-lg md:text-2xl font-bold">
+                                        La maschera d'oro di Teres, simbolo odierno della Golden Mask
+                                    </p>
+                                    <p style="color: #5B8266; background-color: #AEF6C7;" class="px-4 w-fit rounded-xl inline-block text-xs md:text-sm font-extralight">
+                                        Curiosita
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- StickyRightSide component (commented out for now) -->
+              <div class="relative w-full md:w-1/2 lg:w-1/3 md:border-l-2 md:pl-10 ">
+                <div class="sticky top-5 z-10 mb-20 px-6 md:px-0">
+                    <div class="h-64 border w-full">
+                        <img src="./assets/ads.jpeg" alt="Ads" class="w-full h-64 object-cover">
+                    </div>
+                    <hr class="border border-b-gray-500 my-5">
+                    <h2 style="color: #5B8266;" class="flex items-center gap-2 my-5 text-3xl uppercase font-semibold ">
+                        <i class="fas fa-fire"></i> Trends
+                    </h2>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="/" style="background-color: #5B8266;" class="font-semibold text-white uppercase rounded-md px-2 py-1">Nokta marko</a>
+                        <a href="/" style="background-color: #5B8266;" class="font-semibold text-white uppercase rounded-md px-2 py-1">Garet</a>
+                        <a href="/" style="background-color: #5B8266;" class="font-semibold text-white uppercase rounded-md px-2 py-1">News</a>
+                        <a href="/" style="background-color: #5B8266;" class="font-semibold text-white uppercase rounded-md px-2 py-1">Garrett</a>
+                        <a href="/" style="background-color: #5B8266;" class="font-semibold text-white uppercase rounded-md px-2 py-1">Lorem ipsum</a>
+                    </div>
+                    <hr class="border border-b-gray-500 my-5">
+                    
+                    <!-- I Migliori Section -->
+                    <h2 style="color: #5B8266;" class="text-3xl uppercase mb-7 font-semibold ">I Migliori</h2>
+                    <div class="flex flex-col gap-5">
+                        <!-- Article Link -->
+                        <div class="flex items-center gap-5 cursor-pointer hover:opacity-70">
+                            <img src="./assets/img_article_1.png" alt="" class="rounded-md w-28 h-28 object-cover">
+                            <div class="space-y-1">
+                                <p class="text-xs">Emilio G</p>
+                                <p class="text-base hover:underline md:text-xs lg:text-base font-bold">
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam, praesentium.
+                                </p>
+                                <p style="color: #5B8266; background-color: #AEF6C7;" class="px-4 w-fit py-0 rounded-xl inline-block text-xs md:text-sm font-extralight">
+                                    Curiosita
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-5 cursor-pointer hover:opacity-70">
+                            <img src="./assets/img_article_1.png" alt="" class="rounded-md w-28 h-28 object-cover">
+                            <div class="space-y-1">
+                                <p class="text-xs">Emilio G</p>
+                                <p class="text-base hover:underline md:text-xs lg:text-base font-bold">
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam, praesentium.
+                                </p>
+                                <p style="color: #5B8266; background-color: #AEF6C7;" class=" px-4 w-fit py-0 rounded-xl inline-block text-xs md:text-sm font-extralight">
+                                    Curiosita
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-5 cursor-pointer hover:opacity-70">
+                            <img src="./assets/img_article_1.png" alt="" class="rounded-md w-28 h-28 object-cover">
+                            <div class="space-y-1">
+                                <p class="text-xs">Emilio G</p>
+                                <p class="text-base hover:underline md:text-xs lg:text-base font-bold">
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam, praesentium.
+                                </p>
+                                <p style="color: #5B8266; background-color: #AEF6C7;" class="px-4 w-fit py-0 rounded-xl inline-block text-xs md:text-sm font-extralight">
+                                    Curiosita
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-5 cursor-pointer hover:opacity-70">
+                            <img src="./assets/img_article_1.png" alt="" class="rounded-md w-28 h-28 object-cover">
+                            <div class="space-y-1">
+                                <p class="text-xs">Emilio G</p>
+                                <p class="text-base hover:underline md:text-xs lg:text-base font-bold">
+                                    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Quam, praesentium.
+                                </p>
+                                <p style="color: #5B8266; background-color: #AEF6C7;" class="px-4 w-fit py-0 rounded-xl inline-block text-xs md:text-sm font-extralight">
+                                    Curiosita
+                                </p>
+                            </div>
+                        </div>
+                      </div>
+
+                    <h2 class="text-2xl uppercase mb-7 font-semibold text-green-700 my-7">Scopri Tutte Le Guide</h2>
+                    <hr class="border border-b-gray-400 my-5">
+                    <h2 class="text-3xl uppercase my-7 font-semibold text-green-700">Seguici Sui Social</h2>
+                    <div class="grid grid-cols-2 gap-3">
+                        <a href="http://" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border-2 rounded-md py-1 px-2 border-gray-400">
+                            <img src="./assets/facebook.png" alt="facebook" class="w-14">
+                            <p class="font-semibold">Facebook</p>
+                        </a>
+                        <a href="http://" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border-2 rounded-md py-1 px-2 border-gray-400">
+                            <i class="fab fa-instagram text-3xl"></i>
+                            <p class="font-semibold">Instagram</p>
+                        </a>
+                        <a href="http://" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border-2 rounded-md py-1 px-2 border-gray-400">
+                          <img src="./assets/threads.png" alt="whatsapp" class="w-8">
+                          <p class="font-semibold">Threads</p>
+                        </a>
+                        <a href="http://" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border-2 rounded-md py-1 px-2 border-gray-400">
+                            <i class="fab fa-twitter text-3xl"></i>
+                            <p class="font-semibold">Twitter</p>
+                        </a>
+                        <a href="http://" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border-2 rounded-md py-1 px-2 border-gray-400">
+                            <img src="./assets/whatsapp.png" alt="whatsapp" class="w-8">
+                            <p class="font-semibold">Whatsapp</p>
+                        </a>
+                        <a href="http://" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border-2 rounded-md py-1 px-2 border-gray-400">
+                            <img src="./assets/telegram.png" alt="telegram" class="w-8">
+                            <p class="font-semibold">Telegram</p>
+                        </a>
+                        <a href="http://" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border-2 rounded-md py-1 px-2 border-gray-400">
+                            <img src="./assets/spotify.png" alt="spotify" class="w-10">
+                            <p class="font-semibold">Spotify</p>
+                        </a>
+                        <a href="http://" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 border-2 rounded-md py-1 px-2 border-gray-400">
+                            <img src="./assets/tiktok.png" alt="Tik Tok" class="w-7">
+                            <p class="font-semibold">Tik Tok</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <footer class="sticky top-full w-full my-0">
+      <div style="background-color: #5B8266;" class="py-8 px-6 text-white">
+        <div
+          class="max-w-7xl mx-auto grid grid-cols-1 gap-10 lg:gap-20 sm:grid-cols-2 md:grid-cols-3"
+        >
+          <div class="lg:w-4/5">
+            <img
+              src="./assets/FooterLogo.png"
+              alt="Detector Mania"
+              class="mb-3"
+            />
+            <p class="text-xs md:text-sm">
+              Questo blog non rappresenta una testata 
+              giornalistica in quanto viene aggiornato senza 
+              alcuna periodicità.
+              Non può pertanto considerarsi un prodotto 
+              editoriale ai sensi della legge n 62 del 7.03.2001
+            </p>
+          </div>
+          <div class="flex flex-col gap-3">
+            <h2 class="text-2xl font-semibold">Categorie</h2>
+            <ul class="flex flex-col gap-2">
+              <li>
+                <a
+                  class="hover:underline hover:text-gray-300 text-lg lg:text-xl transition-all text-white"
+                  href="#"
+                  >News</a
+                >
+              </li>
+              <li>
+                <a
+                  class="hover:underline hover:text-gray-300 text-lg lg:text-xl transition-all text-white"
+                  href="#"
+                  >Metal Detecting</a
+                >
+              </li>
+              <li>
+                <a
+                  class="hover:underline hover:text-gray-300 text-lg lg:text-xl transition-all text-white"
+                  href="#"
+                  >Metal Detector per Tutti</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="flex flex-col gap-3">
+            <h2 class="text-2xl font-semibold">Link Utili</h2>
+            <ul class="flex flex-col gap-2">
+              <li>
+                <a
+                  class="hover:underline hover:text-gray-300 text-lg lg:text-xl transition-all text-white"
+                  href="#"
+                  >Chi Siamo</a
+                >
+              </li>
+              <li>
+                <a
+                  class="hover:underline hover:text-gray-300 text-lg lg:text-xl transition-all text-white"
+                  href="#"
+                  >Contatti</a
+                >
+              </li>
+              <li>
+                <a
+                  class="hover:underline hover:text-gray-300 text-lg lg:text-xl transition-all text-white"
+                  href="#"
+                  >Ultimi articoli</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div style="background-color: #212922 ;" class=" py-4 px-2 text-white">
+        <p class="text-xs lg:text-sm text-center">
+          Copyrights <i class="far fa-copyright"></i>
+          <script>
+            document.write(new Date().getFullYear());
+          </script>
+          <span class="font-semibold">Detector Mania</span> | Tutti i diritti riservati | Privacy e Cookie Policy - Redazione - design by
+          <span class="font-semibold">Cromia</span>
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+      
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+      const darkModeToggle = document.getElementById("toggle-dark-mode");
+      const notificationsToggle = document.getElementById(
+          "toggle-notifications"
+      );
+      const notifications = document.getElementById("notifications");
+      const searchToggle = document.getElementById("toggle-search");
+      const searchInput = document.getElementById("searchInput");
+      const mobileNavToggle = document.getElementById("show-mobile-nav");
+      const mobileNavClose = document.getElementById("close-mobile-nav");
+      const mobileNavContent = document.querySelector(".mobile-nav-content");
+
+      // Toggle dark mode
+      darkModeToggle.addEventListener("click", function () {
+          document.body.classList.toggle("dark-mode");
+      });
+
+      // Toggle notifications
+      notificationsToggle.addEventListener("click", function () {
+          notifications.classList.toggle("show");
+      });
+
+      // Toggle search input
+      searchToggle.addEventListener("click", function () {
+          searchInput.classList.toggle("hidden");
+          searchInput.focus();
+      });
+
+      // Toggle mobile navigation
+      mobileNavToggle.addEventListener("click", function () {
+          mobileNavContent.classList.add("active");
+          document.body.insertAdjacentHTML(
+          "beforeend",
+          '<div class="fixed-overlay"></div>'
+          );
+          document
+          .querySelector(".fixed-overlay")
+          .addEventListener("click", function () {
+              closeMobileNav();
+          });
+      });
+
+      mobileNavClose.addEventListener("click", function () {
+          closeMobileNav();
+      });
+
+      function closeMobileNav() {
+          mobileNavContent.classList.remove("active");
+          const overlay = document.querySelector(".fixed-overlay");
+          if (overlay) {
+          overlay.remove();
+          }
+      }
+      });
+  </script>
+  </body>
+</html>
