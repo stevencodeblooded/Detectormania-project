@@ -186,6 +186,11 @@
           -ms-overflow-style: none;
           scrollbar-width: none;
         }
+
+        #scrollComponent {
+            transition: transform 0.3s ease-in-out;
+            transform: translateY(-150%); /* Start the component fully out of view */
+        }
     </style>
 </head>
 <body>
@@ -408,6 +413,28 @@
             >
           </li>
         </ul>
+      </div>
+    </div>
+
+    <!-- Offer Slider -->
+    <div id="scrollComponent" class="fixed sm:hidden z-40 inset-x-2 top-4 transition-transform duration-300 transform shadow-lg rounded-lg">
+      <div style="background-color: #212922;" class="flex justify-between rounded-xl p-2">
+          <div class="flex items-center gap-5">
+              <img src="./assets/metal_2.png" alt="Product Image" class="w-12 rounded-md">
+              <div>
+                  <h3 class="text-white text-base font-semibold">212,13 <i class="fa-solid fa-euro-sign"></i></h3>
+                  <p class="text-gray-100 text-xs">+ Speed. 6,27 <i class="fa-solid fa-euro-sign"></i></p>
+              </div>
+          </div>
+          <div>
+              <p class="text-gray-100 text-xs text-center mb-1">#link promozionale</p>
+              <a href="#"
+                  class="flex cursor-pointer items-center gap-2 justify-between bg-yellow-400 hover:bg-yellow-500 transition-all py-1 px-4 rounded-md"
+              >
+                  <h3 class="font-semibold text-xs">Miglior offerta</h3>
+                  <i class="fa-solid fa-chevron-right"></i>
+              </a>
+          </div>
       </div>
     </div>
 
@@ -1260,6 +1287,23 @@
           }
       }
       });
+
+      document.addEventListener('scroll', function() {
+            const scrollComponent = document.getElementById('scrollComponent');
+            const triggerPoint = 300; // Adjust this value based on your needs
+
+            if (window.scrollY > triggerPoint) {
+                scrollComponent.style.transform = "translateY(0)"; // Slide down into view
+            } else {
+                scrollComponent.style.transform = "translateY(-150%)"; // Slide up out of view
+            }
+
+            const hidePoint = 50; // Adjust this value based on your needs
+
+            if (window.scrollY < hidePoint) {
+                scrollComponent.style.transform = "translateY(-150%)"; // Keep it out of view when scrolling back up
+            }
+       });
   </script>
   </body>
 </html>
